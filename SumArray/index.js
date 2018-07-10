@@ -14,6 +14,7 @@ function sum(array) {
 
 //reduce扩展
 //res当作是最后处理得到的样式，记得赋初始值，cur是当前项
+//https://segmentfault.com/a/1190000010731933
 var arrString = 'abcdaabc';
 arrString.split('').reduce(function(res, cur) {
     res[cur] ? res[cur] ++ : res[cur] = 1
