@@ -29,9 +29,6 @@ function IsPopOrder(pushV, popV) {
             pushV.splice(i, 1);
             i--;
             j++;
-            console.log('i',i)
-            console.log('pushV[i]', pushV[i])
-            console.log('popV[j]', popV[j])
         }
         i++;
     }
