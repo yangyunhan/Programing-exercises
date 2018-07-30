@@ -1,5 +1,6 @@
 /**
  * 思路：利用索引找到正向索引值等于逆向索引值的数字
+ * 还有一种思路是异或思想
  * @param {Array} array 
  */
 function FindNumsAppearOnce(array) {
