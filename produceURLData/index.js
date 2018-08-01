@@ -18,3 +18,11 @@ function solutionTwo(data) {
         return `${pre}${cur}=${value}${flag}`
     }, '')
 }
+
+let hashStr = '';
+for (let [key, val] of Object.entries(formValues)) {
+    if (val != undefined && val !== '') {
+        hashStr += `${key}=${encodeURIComponent(val)}&`
+    }
+}
+history.replace(`${pathname}?${hashStr.replace(/&$/, '')}`);
