@@ -35,6 +35,21 @@ function Fibonacci(n) {
     return tailFibonacci(n, 1, 1);
 }
 
+//generator
+function* fibonacci() {
+    let [prev, curr] = [0, 1];
+    for (; ;) {
+        yield curr;
+        [prev, curr] = [curr, prev + curr];
+    }
+}
+function fibonacciSolution(m){
+    for (let n of fibonacci()) {
+        if (n > m) break;
+        console.log(n);
+    }
+}
+
 //柯里化
 /**
  * 将多参数的函数转为单参数的函数
