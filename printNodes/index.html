@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        #first {
+            width: 150px;
+            height: 40px;
+            background-color: coral
+        }
+
+        #second {
+            width: 160px;
+            height: 80px;
+            background-color: bisque
+        }
+
+        #third {
+            width: 170px;
+            height: 120px;
+            background-color: cadetblue
+        }
+    </style>
+</head>
+
+<body>
+    <div id='first'>first node</div>
+    <div id='second'>second node</div>
+    <div id='third'>third node</div>
+    <script>
+        var nodes = document.getElementsByTagName('body');
+        console.log(traverse(nodes[0]))
+
+        function traverse(oNode) {
+            var aResult = [];
+            oNode = oNode || document.body;
+            if (oNode.style) {
+                const cssStyles = getComputedStyle(oNode);
+                var nWidth = parseInt(window.getComputedStyle(oNode).width.slice(0, -2), 10) || 0;
+                var nHeight = parseInt(window.getComputedStyle(oNode).height.slice(0, -2)) || 0;
+                if (nWidth > 50 && nHeight > 50) {
+                    aResult.push(oNode);
+                }
+            }
+            var aChildNodes = oNode.childNodes;
+            if (aChildNodes.length > 0) {
+                for (var i = 0, l = aChildNodes.length; i < l; i++) {
+                    var oTmp = aChildNodes[i];
+                    aResult = aResult.concat(traverse(oTmp));
+                }
+            }
+            return aResult;
+        }
+    </script>
+</body>
+
+</html>
