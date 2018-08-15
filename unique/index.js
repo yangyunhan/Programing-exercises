@@ -41,3 +41,5 @@ for (var i = 0; i < len; i++) {
 var str = 'alibaba'
 Array.from(new Set(str.split('')))
 
+var str = 'alibaba'
+var map = new Map()
