@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #container{
+            overflow: hidden;
+        }
+        #left, #middle, #right{
+            float: left;
+            height: 100px;
+        }
+        #middle{
+            width: 100%;
+            background-color: aliceblue;
+        }
+        #main{
+            margin-left: 120px;
+            margin-right: 150px;
+            background-color: aquamarine;
+        }
+        #left{
+            width: 120px;
+            margin-left: -100%;
+            background-color: bisque;
+        }
+        #right{
+            width: 150px;
+            margin-left: -150px;
+            background-color: blanchedalmond;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="middle">
+            <div id="main">middle
+                content will be apple banana shengbei render content will be apple banana shengbei render
+                content will be apple banana shengbei render content will be apple banana shengbei render
+                content will be apple banana shengbei render content will be apple banana shengbei render
+                content will be apple banana shengbei render content will be apple banana shengbei render
+                content will be apple banana shengbei render content will be apple banana shengbei render
+                content will be apple banana shengbei render content will be apple banana shengbei render
+            </div>
+        </div>
+        <div id="left">left</div>
+        <div id="right">right</div>
+    </div>
+</body>
+</html>
