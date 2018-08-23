@@ -1,0 +1,1 @@
+模拟实现jq中的addClass\removeClass\hasClass
