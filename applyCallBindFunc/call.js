@@ -7,30 +7,28 @@
  * @param {Object} context 
  */
 Function.prototype.call2 = function (context) {
+    //1
     var context = context || window
-    //要获取调用call的函数，用this可以获取
     context.fn = this
-
+    //2
     var args = []
     for (var i = 1; i < arguments.length; i++) {
         args.push('arguments[' + i + ']');
     }
     var result = eval('context.fn(' + args + ')')
+    //3
     delete context.fn
     return result
 }
-//test
 var value = 2;
-var obj = {
-    value: 1
-}
+var obj = { value: 1 }
 function bar(name, age) {
-    console.log(this.value);
     return {
         value: this.value,
         name: name,
         age: age
     }
 }
-bar.call2(null); 
-console.log(bar.call2(obj, 'kevin', 18));
+bar() // value: 2
+bar.call2(null) // value: 2
+bar.call2(obj, 'kevin', 18) // value: 1
