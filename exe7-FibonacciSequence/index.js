@@ -28,11 +28,27 @@ function Fibonacci(n) {
  */
 function tailFibonacci(n, ac1, ac2) {
     if (n == 0) { return 0 }
+    if (n == 1 || n == 2) { return 'ac2' };
+    return tailFibonacci((n - 1).toString(), ac2.toString(), sumStrings(ac1.toString() + ac2.toString()));
+}
+function Fibonacci(n) {
+    return tailFibonacci(n.toString(), '1', '1');
+}
+
+var cache = {
+    0: 0,
+    1: 1
+}
+function fabonacci(n) {
+    return typeof cache[n] === 'number' ? cache[n] : cache[n] = fabonacci(n - 1) + fabonacci(n - 2);
+}
+function tailFibonacci(n, ac1, ac2) {
+    if (n == 0) { return 0 }
     if (n == 1 || n == 2) { return ac2 };
     return tailFibonacci(n - 1, ac2, ac1 + ac2);
 }
 function Fibonacci(n) {
-    return tailFibonacci(n, 1, 1);
+    return tailFibonacci(n + 2, 1, 1);
 }
 
 //generator
@@ -43,7 +59,7 @@ function* fibonacci() {
         [prev, curr] = [curr, prev + curr];
     }
 }
-function fibonacciSolution(m){
+function fibonacciSolution(m) {
     for (let n of fibonacci()) {
         if (n > m) break;
         console.log(n);

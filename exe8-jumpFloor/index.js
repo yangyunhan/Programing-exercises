@@ -11,33 +11,32 @@
  * @param {Number} ac1 
  * @param {Number} ac2 
  */
-function jumpFloor(number, ac1 = 1, ac2 = 2)
-{
-    if(number === 0){
+function jumpFloor(number, ac1 = 1, ac2 = 2) {
+    if (number === 0) {
         return 0
-    }else if (number === 1){
+    } else if (number === 1) {
         return 1
-    }else if(number === 2){
+    } else if (number === 2) {
         return ac2
-    }else{
-        return jumpFloor(number-1, ac2, ac1+ac2)
+    } else {
+        return jumpFloor(number - 1, ac2, ac1 + ac2)
     }
 }
 
 //柯里化
-function jumpFloor(number){
+function jumpFloor(number) {
     return currying(tailFibonacci, 1, 1)(number)
 }
-function tailFibonacci(n, ac1, ac2){
-    if(n === 0) return 0
-    if(n === 1) return 1
-    if(n === 2) return ac2
-    else{
-        tailFibonacci(n-1, ac2, ac1 + ac2)
+function tailFibonacci(n, ac1, ac2) {
+    if (n === 0) return 0
+    if (n === 1) return 1
+    if (n === 2) return ac2
+    else {
+        tailFibonacci(n - 1, ac2, ac1 + ac2)
     }
 }
-function currying(fn, p1, p2){
-    return function(m){
+function currying(fn, p1, p2) {
+    return function (m) {
         return fn.call(this, m, p1, p2)
     }
 }

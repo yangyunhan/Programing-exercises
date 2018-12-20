@@ -4,22 +4,21 @@
  * 找规律，递归写法
  * @param {Number} number 
  */
-function jumpFloorII(number)
-{
-    if(number === 0){
+function jumpFloorII(number) {
+    if (number === 0) {
         return 0
-    }else if(number === 1){
+    } else if (number === 1) {
         return 1
-    }else{
-        return 2 * jumpFloorII(number-1)
+    } else {
+        return 2 * jumpFloorII(number - 1)
     }
 }
 /**
  * 思路：找规律，循环写法
  */
-function jumpFloorII(number){
+function jumpFloorII(number) {
     var a = 1
-    while(--number){
+    while (--number) {
         a = a * 2
     }
     return a
@@ -36,7 +35,6 @@ function jumpFloorII(number){
  * es6/7中新增的数组方法find()\findIndex()\includes()
  * es6/7中新增的字符串方法repeat()\padStart()\padEnd()
  */
-function jumpFloorII(number)
-{
-    var a=1; return a<<(number-1);
+function jumpFloorII(number) {
+    var a = 1; return a << (number - 1);
 }
