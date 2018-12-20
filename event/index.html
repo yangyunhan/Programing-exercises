@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #wrap {
+            width: 280px;
+            height: 280px;
+            overflow: scroll;
+            border: 1px solid black;
+        }
+
+        #box1 {
+            width: 200px;
+            height: 200px;
+            border: 1px solid purple;
+        }
+
+        #box2 {
+            width: 160px;
+            height: 160px;
+            border: 1px solid green;
+        }
+
+        #box3 {
+            width: 100px;
+            height: 100px;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id="wrap">
+        <div class="box box1" id="box1">box1
+            <div class="box box2" id="box2">box2
+                <div class="box box3" id="box3">box3</div>
+            </div>
+        </div>
+        <div class="loger" id="loger"></div>
+    </div>
+    <script>
+        var useCapture = true; //是否使用捕获模式
+        var type = useCapture ? '捕获' : '冒泡';
+        var logerBox = document.getElementById('loger');
+
+        Array.from(document.querySelectorAll('.box')).forEach(v => {
+            var id = v.id;
+            v.addEventListener('click', function (e) {
+                console.log(e)
+                logerBox.innerHTML += '<p>' + '捕获' + ': ' + id + '</p>';
+                //e.stopPropagation()
+            }, useCapture);
+            v.addEventListener('click', function (e) {
+                logerBox.innerHTML += '<p>' + '冒泡' + ': ' + id + '</p>';
+                //e.stopPropagation()
+            });
+        })
+        //单个元素，元素本身的事件的触发顺序，只和绑定顺序有关，和是否捕获，是否冒泡，是否阻止了事件传播都没有关系。
+        document.getElementById('box3').addEventListener('click', function (e) {
+            console.log('box3-stop:', e.target.id)
+            e.stopPropagation();
+        })
+        document.getElementById('box3').addEventListener('click', function (e) {
+            console.log('box3-冒泡:', e.target.id)
+        })
+        document.getElementById('box3').addEventListener('click', function (e) {
+            console.log('box3-捕获:', e.target.id)
+        }, true)
+        document.getElementById('box3').addEventListener('click', function (e) {
+            console.log('box3-冒泡:', e.target.id)
+        })
+        document.getElementById('box3').addEventListener('click', function (e) {
+            console.log('box3-stop:', e.target.id)
+            e.stopPropagation();
+        })
+        //事件代理
+        document.getElementById('wrap').addEventListener('click', function (e) {
+            if (e.target.classList.contains('box')) {
+                logerBox.innerHTML += '<p>' + type + ': ' + e.target.id + '</p>';
+            }
+        }, true)
+        document.getElementById('wrap').addEventListener('click', function (e) {
+            if (e.target.classList.contains('box')) {
+                logerBox.innerHTML += '<p>' + type + ': ' + e.target.id + '</p>';
+            }
+        }, false)
+    </script>
+</body>
+
+</html>

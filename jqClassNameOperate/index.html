@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="opt" class=" one   two three "></div>
+    <script>
+        var div = document.getElementById('opt');
+
+        function addClass(obj, cls) {
+            var objClass = obj.className;
+            var blank = objClass ? ' ' : '';
+            var addClsName = `${objClass}${blank}${cls}`;
+            obj.className = addClsName
+            return obj.className
+        }
+        console.log(addClass(div, 'four'))
+
+        function removeClass(obj, cls) {
+            var objClass = obj.className;
+            objClass = objClass.replace(cls.trim(), ' ').replace(/(\s+)/g, ' ').trim();
+            obj.className = objClass;
+            return obj.className
+        }
+        console.log(removeClass(div, ' two'));
+
+        function hasClass(obj, cls) {
+            var objClass = obj.className;
+            if (objClass.indexOf(cls.trim()) > 0) {
+                return true
+            }
+            return false
+        }
+
+        function hasClass(element, value) {
+            return element.classList ?
+                element.classList.contains(value) :
+                element.className.indexOf(value) > -1;
+        }
+        console.log(hasClass(div, 'three'))
+        console.log(hasClass(div, 'five'))
+
+        /**
+         * Add classes to the given element.
+         * @param {Element} element - The target element.
+         * @param {string} value - The classes to be added.
+         */
+        export function addClass(element, value) {
+            if (!value) {
+                return;
+            }
+
+            if (isNumber(element.length)) {
+                forEach(element, (elem) => {
+                    addClass(elem, value);
+                });
+                return;
+            }
+
+            if (element.classList) {
+                element.classList.add(value);
+                return;
+            }
+
+            const className = element.className.trim();
+
+            if (!className) {
+                element.className = value;
+            } else if (className.indexOf(value) < 0) {
+                element.className = `${className} ${value}`;
+            }
+        }
+    </script>
+</body>
+
+</html>
