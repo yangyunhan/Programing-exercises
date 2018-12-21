@@ -17,21 +17,6 @@
 
         .content {
             height: 5000px;
-        }
-
-        .demo {
-            width: 200px;
-            height: 200px;
-            border: 1px solid red;
-            overflow-y: scroll;
-            margin-top: 50px;
-        }
-
-        .scroll {
-            height: 5000px;
-        }
-
-        .content {
             border: 1px solid black;
         }
     </style>
@@ -39,59 +24,66 @@
 
 <body>
     <div id="without" class="parent without">
-        <div class="content ">without debounce</div>
+        <div class="content">without debounce</div>
     </div>
     <div class='parent debounce'>
         <div class="content">with debounce</div>
     </div>
     <script type="text/javascript">
+        //没有函数防抖的时候
         document.getElementsByClassName("without")[0].onscroll = getSize
-        //要声明成变量需要放在函数前面
-        var debounce4 = function(func, delay, mustRunDelay){
-            var timer = null;
-            var start;
-            return function(){
-                var context = this, curr = +new Date();
-                if(!start) start = curr;
-                if(curr-start > mustRunDelay){
+        //有函数防抖的时候
+        document.getElementsByClassName("debounce")[0].onscroll = debounce2(getSize, 2000);
+        function debounce2(func, delay, context) {
+            /**
+             * 将timer当成函数的属性声明或者直接声明一个timer变量作为定时器
+             * */
+            //var timer = null;
+            return function () {
+                var context = context || this;
+                clearTimeout(func.timer);
+                func.timer = setTimeout(function () {
                     func.call(context)
-                    start = curr
-                }else{
-                    timer = setTimeout(function(){
-                        func.call(context)
-                    }, delay)
-                }
+                }, delay)
             }
-        }
-        
-        document.getElementsByClassName("debounce")[0].onscroll = debounce4(getSize, 1000, 2000);
-        function getSize() {
-            console.log(this.offsetHeight) 
-            console.log(this.offsetLeft) 
-            console.log(this.clientHeight) 
-            console.log(this.clientLeft) 
-            console.log(this.clientTop) 
-            console.log(this.clientWidth) 
-        }
-
-        function debounce(func, context, delay) {
+        }  
+        /**
+         * 另一种方法
+         * */  
+        /* document.getElementsByClassName("debounce")[0].onscroll = function () {
+            var that = this;
+            debounce(getSize, 2000, that);
+        } 
+        function debounce(func, delay, context) {
             var context = context || this;
             clearTimeout(func.id);
             func.id = setTimeout(function () {
                 func.call(context)
             }, delay)
+        }*/
+        function getSize() {
+            console.log('this', this);
+            console.log('offsetHeight', this.offsetHeight);
+            //console.log('clientTop', this.clientTop)
         }
-
-        function debounce2(func, context, delay) {
+        //要声明成变量需要放在函数前面
+        var debounce4 = function (func, delay, mustRunDelay) {
             var timer = null;
+            var start;
             return function () {
-                var context = context || this;
-                clearTimeout(timer);
-                timer = setTimeout(function () {
+                var context = this, curr = +new Date();
+                if (!start) start = curr;
+                if (curr - start > mustRunDelay) {
                     func.call(context)
-                }, delay)
+                    start = curr
+                } else {
+                    timer = setTimeout(function () {
+                        func.call(context)
+                    }, delay)
+                }
             }
-        }    
+        }
+        //document.getElementsByClassName("debounce")[0].onscroll = debounce4(getSize, 1000, 2000);
     </script>
 </body>
 
