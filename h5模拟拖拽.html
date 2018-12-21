@@ -22,7 +22,7 @@
 
         #rec2 {
             position: absolute;
-            bottom: 0;
+            top: 200;
             left: 0;
 
             width: 200px;
@@ -30,24 +30,42 @@
 
             background-color: bisque;
         }
+
+        #div1 {
+            border: 1px solid #aaaaaa;
+            padding: 10px;
+            width: 350px;
+            height: 70px;
+        }
     </style>
 </head>
 
 <body>
     <div>
-        <div id="circle"></div>
+        <div id="circle" draggable="true"></div>
         <div id="rec2"></div>
     </div>
     <script>
         var ball = document.getElementById('circle');
         var x0, y0, x1, y1, label = false;
-        ball.addEventListener('mousedown', function (e) {
+        /* ball.addEventListener('mousedown', function (e) {
             e = e || window.event;
             x0 = this.offsetLeft, y0 = this.offsetTop;
             x1 = e.clientX; y1 = e.clientY;
             label = true
+        }) */
+        ball.addEventListener('dragstart', function (e) {
+            e = e || window.event;
+            x0 = this.offsetLeft, y0 = this.offsetTop;
+            x1 = e.clientX; y1 = e.clientY;
+            label = true;
         })
-        ball.addEventListener('mousemove', function (e) {
+        /* ball.addEventListener('mousemove', function (e) {
+            e = e || window.event;
+            x2 = e.clientX, y2 = e.clientY;
+            if (label) moveE();
+        }) */
+        ball.addEventListener('drag', function (e) {
             e = e || window.event;
             x2 = e.clientX, y2 = e.clientY;
             if (label) moveE();
@@ -62,6 +80,27 @@
             ball.style.top = Y + 'px';
         }
     </script>
+    <!--h5的拖拽事件-->
+    <!-- <p>拖动img_w3slogo.gif图片到矩形框中:</p>
+    <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <br>
+    <img id="drag1" src="D:/document/web/方法框架图.png" draggable="true" ondragstart="drag(event)" width="300" height="56">
+
+    <script>
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("Text", ev.target.id);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("Text");
+            ev.target.appendChild(document.getElementById(data));
+        }
+    </script> -->
 </body>
 
 </html>
