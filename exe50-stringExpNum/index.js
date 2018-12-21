@@ -1,5 +1,5 @@
 /**
- * 思路：正则表达式匹配
+ * 思路：正则表达式匹配，判断字符串是否能表示数字
  * @param {String} s 
  */
 function isNumeric(s){
