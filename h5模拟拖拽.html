@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #circle {
+            position: absolute;
+            left: 0;
+            top: 0;
+
+            border: 2px solid black;
+            border-radius: 50%;
+            width: 15px;
+            height: 15px;
+
+            background-color: red;
+        }
+
+        #rec2 {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+
+            width: 200px;
+            height: 200px;
+
+            background-color: bisque;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div id="circle"></div>
+        <div id="rec2"></div>
+    </div>
+    <script>
+        var ball = document.getElementById('circle');
+        var x0, y0, x1, y1, label = false;
+        ball.addEventListener('mousedown', function (e) {
+            e = e || window.event;
+            x0 = this.offsetLeft, y0 = this.offsetTop;
+            x1 = e.clientX; y1 = e.clientY;
+            label = true
+        })
+        ball.addEventListener('mousemove', function (e) {
+            e = e || window.event;
+            x2 = e.clientX, y2 = e.clientY;
+            if (label) moveE();
+        })
+        ball.addEventListener('mouseup', function (e) {
+            label = false;
+            ball.onmouseup = null;
+        })
+        var moveE = function () {
+            var X = x0 + (x2 - x1), Y = y0 + (y2 - y1);
+            ball.style.left = X + 'px';
+            ball.style.top = Y + 'px';
+        }
+    </script>
+</body>
+
+</html>
