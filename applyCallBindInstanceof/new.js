@@ -12,3 +12,12 @@ function objectFactory() {
     return typeof ret === 'object' ? ret : obj;
 };
 //test
+function Otaku (name, age) {
+    this.name = name;
+    this.age = age;
+    this.habit = 'Games';
+}
+// 使用 new
+var person1 = new Otaku('kevin', 18);
+// 使用 objectFactory
+var person2 = objectFactory(Otaku, 'John', 20);
