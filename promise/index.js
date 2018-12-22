@@ -1,3 +1,42 @@
+//promise实现
+function Promise(executor) {
+    let self = this;
+    self.value = undefined, self.reason = undefined, self.status = 'pending';
+    self.onResolvedCallbacks = [], self.onRejectCallbacks = [];
+    function resolve(value) {
+        if (self.status === 'pending') {
+            self.value = value;
+            self.status = 'resolved';
+            self.onResolvedCallbacks.forEach(fn => fn());
+        }
+    }
+    function reject(reason) {
+        if (self.status === 'pending') {
+            self.reason = reason;
+            self.status = 'rejected';
+            self.onRejectCallbacks.forEach(fn => fn());
+        }
+    }
+    try {
+        executor(resolve, reject);
+    } catch (e) {
+        reject(e);
+    }
+}
+Promise.prototype.then = function (onFulfilled, onRejected) {
+    let self = this;
+    if (self.status === 'resolved') {
+        onFulfilled(self.value)
+    }
+    if (self.status === 'reject') {
+        onRejected(self.reason)
+    }
+    if (self.status === 'pending') {
+        self.onResolvedCallbacks.push(() => { onFulfilled(self.value) })
+        self.onRejectCallbacks.push(() => { onRejected(self.reason) })
+    }
+}
+//promise应用实例1
 function bookTodayMovieForTodayUser() {
     var getUsers = new Promise((resolve, reject) => {
         getTodyUsers(userIds => resolve(userIds))
@@ -9,25 +48,43 @@ function bookTodayMovieForTodayUser() {
         bookTodayMovieForTodayUser(result[0], resolve[1], resolve)
     })
 }
+//promise延迟函数
 var timeout1 = ms => new Promise((resolve, reject) => {
     setTimeout(() => {
         resolve();
     }, ms);
 });
-var ajax3 = () => timeout1(2000).then(() => {
-    console.log('1');
-    return 1;
-});
-var ajax4 = () => timeout1(1000).then(() => {
-    console.log('2');
-    return 2;
-});
+//promise应用实例2
+function red() { console.log('red') }
+function green() { console.log('green') }
+function yellow() { console.log('blue') }
+var delay = function (timer, cb) {
+    return new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            cb();
+            resolve()
+        }, timer);
+    })
+}
+var step = function () {
+    Promise.resolve().then(function () {
+        return delay(3000, red);
+    }).then(function () {
+        return delay(1000, green);
+    }).then(function () {
+        return delay(2000, yellow);
+    }).then(function () {
+        step();
+    })
+}
+step();
+//promise.all实现
 Promise.all = (arr) => {
     let resultArr = [];
-    return new Promise(function(resolve, reject){
+    return new Promise(function (resolve, reject) {
         let i = 0;
-        function nextPro(){
-            arr[i]().then(function(result) {
+        function nextPro() {
+            arr[i]().then(function (result) {
                 resultArr.push(result);
                 i++;
                 if (i === arr.length) {
@@ -41,35 +98,3 @@ Promise.all = (arr) => {
     })
 }
 Promise.all([ajax3, ajax4])
-
-function Npromise(){
-    this.status = 'pending';
-    var that = this;
-    this.msg = ''
-    var process = arguments[0];//function(resolve, reject){resolve('123')}
-    process(function(){
-        that.status = 'resolve'
-        that.msg = arguments[0]//123
-    }, function(){
-        that.status = 'reject'
-        that.msg = arguments[0]
-    })
-    return this
-}
-Npromise.prototype.then = function(){
-    if(this.status === 'resolve'){
-        arguments[0](this.msg)//arguments[0]:function(success){console.log(success);console.log('ok')};
-    }
-    if((this.status === 'reject') && (arguments[1])){
-        arguments[1](this.msg)
-    }
-}
-var mm=new Npromise(function(resolve,reject){
-    resolve('123');
-});
-mm.then(function(success){
-    console.log(success);
-    console.log("ok!");
-},function(){
-    console.log('fail!');
-});
